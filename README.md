@@ -90,9 +90,22 @@ vIOS images should now run successfully after starting and able to console into
  <summary><h4>c) Alternative methods to console into lab devices</h4></summary>
   <br> 
   
-If you are looking for alternative variations for logging into router/switch consoles or graphical gui devices, please follow [these steps](https://chatgpt.com/s/t_69005aadc8248191a1464a2e8028066a) and dig deeper for more custom configurations to suit your preferences.
+If you are looking for alternative variations for logging into router/switch consoles or graphical gui devices, please follow [these steps](https://chatgpt.com/s/t_69005aadc8248191a1464a2e8028066a) and feel free dig deeper for more custom configurations to suit your preferences.
  
 </details> 
+
+<h2>🪂 <em>"One Man's Thoughts..."</em></h2>
+<em>After a decade+ of studying, labbing, and extensive note taking in my Network Engineering Journey, I felt it was a good idea to get alot of knowledge and theory down in a practical manner for project presentation.  Though I still refer  alot to the notes of yesteryear contained in my lengthy Onenote gathering...whew, you'll see from the screenshot that it gets a bit much to navigate through:<br>
+<br>
+<p float="center">
+  <img src="images/Onenote.png" width="900" />
+<br>
+
+Learning is a lifelong journey and we all go about it in our own way.  I've always been a self starter, constantly seeking and pushing towards non-conventional methods for obtaining the knowledge I know I needed to get to where I wanted trajectory of my life to go.  Has the trial and error always gone as planned - ABSOLUTELY NOT... but it's the spice of life that keeps things interesting and builds resolve to just keep going after picking yourself up, dusting yourself off, and shaking off the disapointments and setbacks.  This CCNP Lab repo, I hope, will show my resolve to constantly get better, even if revisiting the chapters of my professional journey in Networking seems a bit combersome at times.<br>
+<br>
+Big shout out to the pioneers who shaped my educational yesteryear; from the countless  CBT Nugget series videos and Kevin Wallace - who personally explained networking to me in an easy, digestable format that allowed this free thinker to finally make sense of the Networking jumble.  Salute.
+
+<br>Colleagues, Onward.</em><br> 
 
 
 
