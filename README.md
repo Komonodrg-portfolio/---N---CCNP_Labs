@@ -33,7 +33,6 @@ To illustrate a cost effective platform to  allow for the practice and self stud
 
 ---
 
----
 
 ## 🔧 Webpage Navigation
 
@@ -41,11 +40,13 @@ Rather then creating a individual repo per lab on github, I decided to employ th
 
 <img src="images/Page1.png" width="800"/>
 
+---
 
+## ⚙️ Prerequisites
 
-### Prerequisites
+Please view my [EVE-NG setup tutorial](https://github.com/Komonodrg-portfolio/---N---Home_Lab_Networking) for lab environment setup. <br> 
 
-Please view my [EVE-NG setup tutorial](https://github.com/Komonodrg-portfolio/---N---Home_Lab_Networking) for lab environment setup.  For L3 (Router) and L2 (Switch) files, there are 2 main flavors commonly used:
+For L3 (Router) and L2 (Switch) files, there are 2 main flavors commonly used:
 - IOL (contains less features, but requires less system resources to run allowing more nodes to run successfully)
 - vIOS (more feature rich, requiring more system resources to run)
 
