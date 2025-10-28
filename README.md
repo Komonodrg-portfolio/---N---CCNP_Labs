@@ -3,7 +3,7 @@
 ---
 ---
 
-# 🏠 CCNP Labs (Encore 350-401)
+# 🌐 CCNP Labs (Encore 350-401)
 
 This repo project demonstrates my self study prep of CCNP comptetencies using **EVE-NG (Emulated Virtual Environment Next Generation)** in preperation for certification acquisition. It showcases that not alot of financial resourcs are needed in order to pursue your education goals in becoming a competent CCNP level Network Engineer.   With a labtop of 16GB  (recommended) of ram, this platform allows training from anywhere in the world.
 
@@ -33,15 +33,17 @@ To illustrate a cost effective platform to  allow for the practice and self stud
 
 ---
 
-
-
 ---
 
-## 🔧 Setup Instructions
+## 🔧 Webpage Navigation
+
+Rather then creating a individual repo per lab on github, I decided to employ the use of jupyter notebooks for each lab.  You can view individual labs via the folder hierachy on this page.
+
+
 
 ### Prerequisites
 
-This guide will illustrate how to setup the environment both on Windows & Linux. 
+Please view my [EVE-NG setup tutorial](https://github.com/Komonodrg-portfolio/---N---Home_Lab_Networking) for lab environment setup
 
 <details>
  <summary><h4>a) System Requirements</h4></summary>
