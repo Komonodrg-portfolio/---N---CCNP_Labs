@@ -82,7 +82,7 @@ Place vIOS image files in folders on EVE-NG in folder /opt/unetlab/addons/qemu f
 vIOS images should now run successfully after starting and able to console into
 ```
 <p float="center">
-  <img src="images/vIOS1.png" width="500" />
+  <img src="images/vIOS1.png" width="470" />
   <img src="images/vIOS2.png" width="500" />
 
 </details> 
