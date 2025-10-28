@@ -59,6 +59,7 @@ Place IOL image files on EVE-NG in folder /opt/unetlab/addons/iol/bin folder loc
   └─ Change execution permission on the file via: sudo chmod +x <filename>
   └─ 1) Copy License information generated
   └─ 2) Paste contents into iourc file you'll create via: nano -c iourc > Ctrl + X > Enter to save
+  └─ Fix permission via command:  /opt/unetlab/wrappers/unl_wrapper -a fixpermissions
 
 IOL images should now run successfully after starting and able to console into
 ```
@@ -69,23 +70,23 @@ IOL images should now run successfully after starting and able to console into
 
 </details>
 <details>
- <summary><h4>b) Download Hypervisor (VMWare)</h4></summary>
-  <br> 
-  For this lab, we will run EVE-NG as a virtual machine from within a <a href="https://chatgpt.com/share/68cb87a6-3580-800b-a816-6c42bfab1272/">hypervisor</a> (type 2).  Both Linux and Windows versions are free, but require <a href="https://support.broadcom.com/">signing up for a broadcom account</a> first:<br>
-  <br>
-<p align="center">
- <img src="images/VMWareInstall1.png" alt="Image 1" width="43%" style="margin-right: 10px;"/>
- <img src="images/VMWareInstall2.png" alt="Image 1" width="45%" style="margin-right: 10px;"/>
- <img src="images/VMWareInstall3.png" alt="Image 1" width="45%" style="margin-right: 10px;"/>
- <img src="images/VMWareInstall4.png" alt="Image 1" width="45%" style="margin-right: 10px;"/>
- <img src="images/VMWareInstall5.png" alt="Image 1" width="45%" style="margin-right: 10px;"/>
-</p>  
-<br>
-Once the installation file downlods successfully, proceed with installation of VMWare:</br><br>
+ <summary><h4>b) vIOS Image Setup (VMWare)</h4></summary>
+ 
+  ```
+Place vIOS image files in folders on EVE-NG in folder /opt/unetlab/addons/qemu folder location
+  └─ For L2 switch, make sure folder is named: viosl2-<foldername choice>
+  └─ For L2 router, make sure folder is named: vios-<foldername choice>
+  └─ Fix permission via command:  /opt/unetlab/wrappers/unl_wrapper -a fixpermissions
+
+vIOS images should now run successfully after starting and able to console into
+```
+<p float="center">
+  <img src="images/vIOS1.png" width="500" />
+  <img src="images/vIOS2.png" width="500" />
 
 </details> 
 <details>
- <summary><h4>c) Install VMWare Workstation</h4></summary>
+ <summary><h4>c) Alternative methods to console into lab devices</h4></summary>
   <br> 
   
 **Windows:**  Navigate to where the file downloaded, and double click it to start the installer...
