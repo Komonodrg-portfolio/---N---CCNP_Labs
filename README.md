@@ -45,29 +45,27 @@ Rather then creating a individual repo per lab on github, I decided to employ th
 
 ### Prerequisites
 
-Please view my [EVE-NG setup tutorial](https://github.com/Komonodrg-portfolio/---N---Home_Lab_Networking) for lab environment setup
+Please view my [EVE-NG setup tutorial](https://github.com/Komonodrg-portfolio/---N---Home_Lab_Networking) for lab environment setup.  For L3 (Router) and L2 (Switch) files, there are 2 main flavors commonly used:
+- IOL (contains less features, but requires less system resources to run allowing more nodes to run successfully)
+- vIOS (more feature rich, requiring more system resources to run)
 
 <details>
- <summary><h4>a) System Requirements</h4></summary>
+ <summary><h4>a)  IOL Image Setup</h4></summary>
   <br> 
-Before lab setup, ensure your PC/Laptop meets minimum requirements for successful operation:<br> 
- <br>
+ 
+```
+Place IOL image files on EVE-NG in folder /opt/unetlab/addons/iol/bin folder location 
+  └─ Also place license generation file.py in same folder
+  └─ Change execution permission on the file via: sudo chmod +x <filename>
+  └─ 1) Copy License information generated
+  └─ 2) Paste contents into iourc file you'll create via: nano -c iourc > Ctrl + X > Enter to save
 
-**Windows:**  Click on Start > in search box type: `msinfo` > press Enter
-
-**Linux (Mint):** Click on LM button (bottom left) > type: `System Info` > press Enter
-
-
- <p align="center">
-  <img src="images/MSInfo.png" alt="Image 1" width="45%" style="margin-right: 10px;"/>
-  <img src="images/MintSystemInfo.png" alt="Image 2" width="40%" />
-</p>
-
-Check your system specifications vs what the [official EVE-NG installation guide](https://www.eve-ng.net/index.php/documentation/) recommends.  As of the date of this repo creation, current recommended specs:
-
-
- <p align="center">
-  <img src="images/SystemReqs.png" alt="Image 1" width="45%" style="margin-right: 10px;"/>
+IOL images should now run successfully after starting and able to console into
+```
+<p float="center">
+  <img src="images/IOL1.png" width="325" />
+  <img src="images/IOL2.png" width="325" />
+  <img src="images/IOL3.png" width="345" />
 
 </details>
 <details>
