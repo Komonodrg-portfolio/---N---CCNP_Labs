@@ -82,8 +82,8 @@ Place vIOS image files in folders on EVE-NG in folder /opt/unetlab/addons/qemu f
 vIOS images should now run successfully after starting and able to console into
 ```
 <p float="center">
-  <img src="images/vIOS1.png" width="470" />
-  <img src="images/vIOS2.png" width="500" />
+  <img src="images/vIOS1.png" width="400" />
+  <img src="images/vIOS2.png" width="400" />
 
 </details> 
 <details>
@@ -117,10 +117,54 @@ Big shout out to the pioneers who shaped my educational yesteryear; from the cou
 
 The aim for this lab is to showcase configuration and OSPF verification.  Theoretcial knowledge on the OSPF routing protocol can be found [here](https://www.cisconetsolutions.com/ospf-routing-protocol-deep-dive/). 
   
-### Topology
+### Topology:
 
 <p float="center">
-  <img src="images/1.OSPFv2.png" width="700" />
+  <img src="images/1.OSPFv2.png" width="950" /><br>
+
+### Requirements:
+
+1) Enable OSPF on all R1, R2, R3, INET-1 interfaces with interface method
+
+2) Configure passive interfaces on LAN Segments and loopbacks
+
+3) Enable OSPF on Remote-1 and Remote-2 interfaces with global method
+
+4) Advertise all LAN segments, WAN connected subnets, and loopbacks
+
+5) Advertise default route from INET-1 to downstream routers for internet access
+
+6) Verify lab configuration and OSPF routing tables
+ - show ip ospf neighbor (R1, INET-1, R3)
+ - show ip route ospf (R1, INET-1, R3)
+ - show ip protocols (R1)
+ - show ip ospf interface (R1, INET-1, Remote-1)
+ - ping (LAN-2, ISP, Remote-1)
+
+### Verification:
+
+Will take a look at OSPF learned networks and checks only from INET-1 perspective here & verify Pings - proving connectivity... all other verification checks from lab requirements successful ✔️.
+
+<p float="center">
+  <img src="images/1.OSPFv2-1.png" width="500" />
+  <img src="images/1.OSPFv2-2.png" width="525" /><<br>
+
+  ```
+Show ip ospf neighbor
+  └─ 1) Shows Management (loopback) addresses for directly connected neighbors
+  └─ 2) Show learned routes through OSPF, make note of Remote routes (172...) learned from summary route configured from Remote-1
+  └─ 3) Also showing the point-to-point routes for interface IPs configured connecting OSPF participating routers
+```
+
+```
+Show ip protocols
+  └─ 1) Shows Management (loopback) addresses for INET-1 (192.168.255.4)
+  └─ 2) Indicates INET-1 as both ABR and ASBR, also showing directly connected OSPF areas (0 & 3)
+  └─ 3) Shows participating interfaces in Area 0
+  └─ 4) Shows participating interfaces in Area 3
+  └─ 5) Shows passive interfaces (interfaces where routes will not be advertised, but still run - reducing routing table overhead)
+  └─ 6) Shows neighboring OSPF Participating routers
+```
  
 </details> 
 
