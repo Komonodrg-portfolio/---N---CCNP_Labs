@@ -82,8 +82,7 @@ Place vIOS image files in folders on EVE-NG in folder /opt/unetlab/addons/qemu f
 vIOS images should now run successfully after starting and able to console into
 ```
 <p float="center">
-  <img src="images/vIOS1.png" width="400" />
-  <img src="images/vIOS2.png" width="400" />
+  <img src="images/vIOS1.png" width="400" /><img src="images/vIOS2.png" width="400" />
 
 </details> 
 <details>
@@ -147,13 +146,15 @@ Will take a look at OSPF learned networks and checks only from INET-1 perspectiv
 
 <p float="center">
   <img src="images/1.OSPFv2-1.png" width="500" />
-  <img src="images/1.OSPFv2-2.png" width="525" /><<br>
+  <img src="images/1.OSPFv2-2.png" width="500" />
 
   ```
 Show ip ospf neighbor
-  └─ 1) Shows Management (loopback) addresses for directly connected neighbors
-  └─ 2) Show learned routes through OSPF, make note of Remote routes (172...) learned from summary route configured from Remote-1
-  └─ 3) Also showing the point-to-point routes for interface IPs configured connecting OSPF participating routers
+   └─ 1) Shows Management (loopback) addresses for directly connected neighbors
+
+Show ip route ospf
+   └─ 2) Show learned routes through OSPF, make note of Remote routes (172...) learned from summary route configured from Remote-1
+   └─ 3) Also showing the point-to-point routes for interface IPs configured connecting OSPF participating routers
 ```
 
 ```
