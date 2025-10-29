@@ -111,17 +111,17 @@ Big shout out to the pioneers who shaped my educational yesteryear; from the cou
 ## 🧪 LABS
 
 <details>
- <summary><h4>1) OSPFv2 Multi Area</h4></summary>
+ <summary><h3>1) OSPFv2 Multi Area</h3></summary>
   <br> 
 
 The aim for this lab is to showcase configuration and OSPF verification.  Theoretcial knowledge on the OSPF routing protocol can be found [here](https://www.cisconetsolutions.com/ospf-routing-protocol-deep-dive/). 
   
-### Topology:
+## Topology:
 
 <p float="center">
   <img src="images/1.OSPFv2.png" width="950" /><br>
 
-### Requirements:
+## Requirements:
 
 1) Enable OSPF on all R1, R2, R3, INET-1 interfaces with interface method
 
@@ -140,7 +140,7 @@ The aim for this lab is to showcase configuration and OSPF verification.  Theore
  - show ip ospf interface (R1, INET-1, Remote-1)
  - ping (LAN-2, ISP, Remote-1)
 
-### Verification:
+## Verification:
 
 Will take a look at OSPF learned networks and checks only from INET-1 perspective here & verify Pings - proving connectivity... all other verification checks from lab requirements successful ✔️.
 
@@ -166,6 +166,277 @@ Show ip protocols
   └─ 5) Shows passive interfaces (interfaces where routes will not be advertised, but still run - reducing routing table overhead)
   └─ 6) Shows neighboring OSPF Participating routers
 ```
+<details>
+ <summary><h3>Configurations </h3></summary>
+
+ R1:
+ 
+  ```
+hostname R1
+
+interface Loopback0
+ description Management Interface
+ ip address 192.168.255.1 255.255.255.255
+ ip ospf 1 area 0
+
+interface Ethernet0/0
+ description link to R2 router
+ ip address 192.168.1.2 255.255.255.252
+ ip ospf 1 area 1
+ duplex auto
+ speed auto
+ media-type rj45
+
+interface Ethernet0/1
+ description link to INET-1 router
+ ip address 192.168.1.9 255.255.255.252
+ ip ospf 1 area 0
+ duplex auto
+ speed auto
+ media-type rj45
+
+interface Ethernet0/2
+ description link to R3 router
+ ip address 192.168.1.5 255.255.255.252
+ ip ospf 1 area 0
+ duplex auto
+ speed auto
+ media-type rj45
+
+router ospf 1
+ passive-interface Loopback0
+```
+R2:
+```
+hostname R2
+
+interface Loopback0
+ description Management Interface
+ ip address 192.168.255.2 255.255.255.255
+ ip ospf 1 area 1
+
+interface Ethernet0/0
+ description link to R1 router
+ ip address 192.168.1.1 255.255.255.252
+ ip ospf 1 area 1
+ duplex auto
+ speed auto
+ media-type rj45
+
+interface Ethernet0/1
+ description LAN (172.16.1.0/24)
+ ip address 172.16.1.254 255.255.255.0
+ ip ospf 1 area 1
+ duplex auto
+ speed auto
+ media-type rj45
+
+router ospf 1
+ passive-interface default
+ no passive-interface Ethernet0/0
+```
+R3:
+```
+hostname R3
+
+interface Loopback0
+ description Management Interface
+ ip address 192.168.255.3 255.255.255.255
+ ip ospf 1 area 0
+
+interface Ethernet0/0
+ description link to R1 router
+ ip address 192.168.1.6 255.255.255.252
+ ip ospf 1 area 0
+ duplex auto
+ speed auto
+ media-type rj45
+
+interface Ethernet0/1
+ description link to INET-1 router
+ ip address 192.168.1.13 255.255.255.252
+ ip ospf 1 area 0
+ duplex auto
+ speed auto
+ media-type rj45
+
+interface Ethernet0/2
+ description link to Remote-1
+ ip address 192.168.1.17 255.255.255.252
+ ip ospf 1 area 2
+ duplex auto
+ speed auto
+ media-type rj45
+
+router ospf 1
+ passive-interface Loopback0
+```
+INET-1:
+```
+hostname INET-1
+
+interface Loopback0
+ description Management Interface
+ ip address 192.168.255.4 255.255.255.255
+ ip ospf 1 area 0
+
+interface Ethernet0/0
+ description link to R1 router
+ ip address 192.168.1.10 255.255.255.252
+ ip ospf 1 area 0
+ duplex auto
+ speed auto
+ media-type rj45
+
+interface Ethernet0/1
+ description link to R3 router
+ ip address 192.168.1.14 255.255.255.252
+ ip ospf 1 area 0
+ duplex auto
+ speed auto
+ media-type rj45
+
+interface Ethernet0/2
+ description link to ISP router
+ ip address 172.33.1.1 255.255.255.252
+ duplex auto
+ speed auto
+ media-type rj45
+
+interface Ethernet0/3
+ description link to Remote-2 router
+ ip address 192.168.1.21 255.255.255.252
+ ip ospf 1 area 3
+ duplex auto
+ speed auto
+ media-type rj45
+
+router ospf 1
+ passive-interface Ethernet0/2
+ passive-interface Loopback0
+ default-information originate
+
+ip route 0.0.0.0 0.0.0.0 172.33.1.2
+```
+Remote-1:
+```
+hostname Remote-1
+
+no logging console
+
+vtp mode transparent
+
+spanning-tree mode rapid-pvst
+
+vlan 10-12 
+
+interface Loopback0
+ description Management Interface
+ ip address 192.168.255.5 255.255.255.255
+
+interface Ethernet0/1
+ switchport access vlan 10
+ switchport mode access
+ media-type rj45
+ negotiation auto
+
+interface Ethernet0/2
+ switchport access vlan 11
+ switchport mode access
+ media-type rj45
+ negotiation auto
+         
+interface Ethernet0/3
+ switchport access vlan 12
+ switchport mode access
+ media-type rj45
+ negotiation auto
+
+interface Ethernet0/0
+ description link to R3 router
+ no switchport
+ ip address 192.168.1.18 255.255.255.252
+ negotiation auto
+
+interface Vlan10
+ ip address 172.16.10.254 255.255.255.0
+
+interface Vlan11
+ ip address 172.16.11.254 255.255.255.0
+
+interface Vlan12
+ ip address 172.16.12.254 255.255.255.0
+         
+router ospf 1
+ passive-interface Loopback0
+ passive-interface Vlan10
+ passive-interface Vlan11
+ passive-interface Vlan12
+ network 172.16.0.0 0.0.255.255 area 2
+ network 192.168.1.16 0.0.0.3 area 2
+ network 192.168.255.5 0.0.0.0 area 2
+```
+Remote-2:
+```
+hostname Remote-2
+
+interface Loopback0
+ description Management Interface
+ ip address 192.168.255.6 255.255.255.255
+
+interface Ethernet0/0
+ description link to INET-1 router
+ ip address 192.168.1.22 255.255.255.252
+ duplex auto
+ speed auto
+ media-type rj45
+
+interface Ethernet0/1
+ description LAN (172.16.2.0/26)
+ ip address 172.16.2.62 255.255.255.192
+ duplex auto
+ speed auto
+ media-type rj45
+
+router ospf 1
+ passive-interface default
+ no passive-interface Ethernet0/0
+ network 172.16.2.0 0.0.0.63 area 3
+ network 192.168.1.20 0.0.0.3 area 3
+ network 192.168.255.6 0.0.0.0 area 3
+```
+ISP:
+```
+hostname ISP
+
+interface Ethernet0/0
+ description link to INET-1 router
+ ip address 172.33.1.2 255.255.255.252
+ duplex auto
+ speed auto
+ media-type rj45
+
+ip route 0.0.0.0 0.0.0.0 172.33.1.1
+```
+No Shuts on all interfaces:
+```
+interface Ethernet0/0
+ no shut
+!
+interface Ethernet0/1
+ no shut
+!
+interface Ethernet0/2
+ no shut
+!
+interface Ethernet0/3
+ no shut
+!
+```
+<p float="center">
+  <img src="images/vIOS1.png" width="400" /><img src="images/vIOS2.png" width="400" />
+
+</details> 
  
 </details> 
 
