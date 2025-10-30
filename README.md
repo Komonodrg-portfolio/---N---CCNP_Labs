@@ -33,15 +33,6 @@ To illustrate a cost effective platform to  allow for the practice and self stud
 
 ---
 
-
-## 🔧 Webpage Navigation
-
-Rather then creating a individual repo per lab on github, I decided to employ the use of jupyter notebooks for each lab.  You can view individual labs via the folder hierachy on this page:
-
-<img src="images/Page1.png" width="800"/>
-
----
-
 ## ⚙️ Prerequisites
 
 Please view my [EVE-NG setup tutorial](https://github.com/Komonodrg-portfolio/---N---Home_Lab_Networking) for lab environment setup. <br> 
@@ -433,12 +424,11 @@ interface Ethernet0/3
  no shut
 !
 ```
-<p float="center">
-  <img src="images/vIOS1.png" width="400" /><img src="images/vIOS2.png" width="400" />
+
 
 </details> 
  
-</details> 
+ 
 
 
 <h2> 🤳 Connect with me:</h2>
