@@ -488,6 +488,21 @@ The aim for this lab is to illustrate industry standard Switching practices at C
 
 ## ✔️ Verification:
 
+<p float="center">
+  <img src="images/Switching-1a.png" width="950" /><br>
+
+ Per topology, the correct ports are designated as ROOT, leading to perspective Root Bridges on DC-3 & DC-4 (Distribution Layer Switches)
+ 
+  <img src="images/Switching-1b.png" width="950" /><br>
+
+1) Confirms expected trunk creations, using set native vlan of (99) - industry practice to move off vlan 1
+2) Redundant port channel (LACP shown)... even with required shutdowns on ports from requirments, this allows for proper pinging of servers through etherchannel
+3) Verified Rapid Per VLAN spanning tree enabled<br>
+4-6 Same verified as on DC-3 as DC-4
+  
+  <img src="images/Switching-1c.png" width="950" /><br>
+
+With ports shutdown from requirement, LAN PCs are able to reach the .254 server addresses successfully.
 
 <details>
  <summary><h3>Configurations </h3></summary>
