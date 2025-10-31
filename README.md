@@ -439,7 +439,7 @@ The aim for this lab is to illustrate industry standard Switching practices at C
 | Tool       | Purpose                              |
 |------------|--------------------------------------|
 | root guard    | Allows downstream switches from becoming root bridge, err-disabling receiving port if higher bpdu recieved          |
-| etherchannel | Allows for redundant link, in case of link failure        |
+| etherchannel | Allows for redundant connectivity, in case of link failure        |
 | rapid VLAN spanning-tree   | Fast convergence, in case of link failure          |
 | trunks  | vlan proliferation                     |
 | portfast  | For LAN (PCs, Printers) fast convergence                     |
