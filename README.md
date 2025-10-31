@@ -157,8 +157,8 @@ Show ip protocols
   └─ 5) Shows passive interfaces (interfaces where routes will not be advertised, but still run - reducing routing table overhead)
   └─ 6) Shows neighboring OSPF Participating routers
 ```
-<details>
- <summary><h3>Configurations </h3></summary>
+ <details>
+  <summary><h3>Configurations </h3></summary>
 
  R1:
  
@@ -424,11 +424,346 @@ interface Ethernet0/3
  no shut
 !
 ```
+ </details> 
+
+</details> 
+
+<details>
+ <summary><h3>2) Switching Protocols </h3></summary>
+  <br> 
+
+The aim for this lab is to illustrate industry standard Switching practices at CCNP level, troubleshooting, and  verification.  Theoretcial knowledge on Switching can be found [here](https://chatgpt.com/s/t_69038587b53c81918e16455971cea5f5).  Please feel free to dive deeper into topics still a bit uncertain to you.
+
+## 🧰  Technologies
+
+| Tool       | Purpose                              |
+|------------|--------------------------------------|
+| root guard    | Allows downstream switches from becoming root bridge, err-disabling receiving port if higher bpdu recieved          |
+| etherchannel | Allows for redundant link, in case of link failure        |
+| rapid VLAN spanning-tree   | Fast convergence, in case of link failure          |
+| trunks  | vlan proliferation                     |
+| portfast  | For LAN (PCs, Printers) fast convergence                     |
+| bpduguard  | For LAN (PCs, Printers), prevents loops if switch plugged in, err-disabling port                     |
+
+## 🌐 Topology:
+
+<p float="center">
+  <img src="images/Switching-1.png" width="950" /><br>
+ 
+## Requirements:
+
+1. DC-3 / DC-4
+- show interfaces trunk
+- show etherchannel summary
+- show spanning-gree summary
+- show spanning-tree interface E0/0 detail
+- show spanning-tree interface E0/1 detail
+- root guard on e0/0 & e0/1
+
+2. DC-1 / DC-2
+- show interfaces trunk
+- show spanning-tree interface e0/0 
+- show spanning-tree interface e0/1 
+- show spanning-tree interface E0/0 detail
+- show spanning-tree interface E0/0 detail
+
+3. Ping
+- LAN-1> ping 192.168.9.254
+- LAN-2> ping 192.168.10.254
+- LAN-3> ping 192.168.11.254
+- LAN-4> ping 192.168.12.254
+
+4. Failover Testing
+- DC-1: interface e0/0 (shut)<br>
+  LAN-2 > ping 192.168.9.254
+
+- DC-1: interface e0/1 (shut)<br>
+  LAN-1 > ping 192.168.10.254
+
+- DC-2: interface e0/0 (shut)<br>
+  LAN-4 > ping 192.168.11.254
+
+- DC-2: interface e0/0 (shut)<br>
+  LAN-3 > ping 192.168.12.254
+
+## ✔️ Verification:
+
+
+<details>
+ <summary><h3>Configurations </h3></summary>
+
+ DC-1:
+  ```
+hostname DC-1
+
+vtp mode transparent
+
+spanning-tree mode rapid-pvst
+
+vlan 9-10 
+
+interface Ethernet0/0
+ description link to DC-3 (DTP)
+ switchport trunk allowed vlan 9,10
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 99
+ media-type rj45
+ negotiation auto
+
+interface Ethernet0/1
+ description link to DC-4 (DTP)
+ switchport trunk allowed vlan 9,10
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 99
+ shutdown
+ media-type rj45
+ negotiation auto
+         
+interface Ethernet0/2
+ description hosts VLAN 9
+ switchport access vlan 9
+ switchport mode access
+ media-type rj45
+ negotiation auto
+ spanning-tree portfast edge
+ spanning-tree bpduguard enable
+
+interface Ethernet0/3
+ description hosts VLAN 10
+ switchport access vlan 10
+ switchport mode access
+ media-type rj45
+ negotiation auto
+ spanning-tree portfast edge
+ spanning-tree bpduguard enable
+```
+DC-2:
+```
+hostname DC-2
+
+vtp mode transparent
+
+spanning-tree mode rapid-pvst
+
+vlan 11-12 
+
+interface Ethernet0/0
+ description link to DC-4 (Static Trunk)
+ switchport trunk allowed vlan 11,12
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 99
+ switchport mode trunk
+ shutdown
+ media-type rj45
+ negotiation auto
+
+interface Ethernet0/1
+ description link to DC-3 (Static Trunk)
+ switchport trunk allowed vlan 11,12
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 99
+ switchport mode trunk
+ media-type rj45
+ negotiation auto
+
+interface Ethernet0/2
+ description hosts VLAN 11
+ switchport access vlan 11
+ switchport mode access
+ media-type rj45
+ negotiation auto
+ spanning-tree portfast edge
+ spanning-tree bpduguard enable
+
+interface Ethernet0/3
+ description hosts VLAN 12
+ switchport access vlan 12
+ switchport mode access
+ media-type rj45
+ negotiation auto
+ spanning-tree portfast edge
+ spanning-tree bpduguard enable
+```
+DC-3:
+```
+hostname DC-3
+
+vtp mode transparent
+
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+spanning-tree vlan 1,10-11 priority 0
+spanning-tree vlan 9,12 priority 4096
+
+vlan 9-12 
+
+interface Port-channel1
+ switchport trunk allowed vlan 9-12
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 99
+ switchport mode trunk
+ switchport nonegotiate
+
+interface Ethernet0/0
+ description link to DC-1 (DTP)
+ switchport trunk allowed vlan 9,10
+ switchport trunk native vlan 99
+ switchport mode dynamic desirable
+ media-type rj45
+ negotiation auto
+ spanning-tree guard root
+
+interface Ethernet0/1
+ description link to DC-2 (Static Trunk)
+ switchport trunk allowed vlan 11,12
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 99
+ switchport mode trunk
+ switchport nonegotiate
+ media-type rj45
+ negotiation auto
+ spanning-tree guard root
+
+interface Ethernet0/2
+ description LACP EtherChannel
+ switchport trunk allowed vlan 9-12
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 99
+ switchport mode trunk
+ switchport nonegotiate
+ media-type rj45
+ negotiation auto
+ channel-group 1 mode active
+         
+interface Ethernet0/3
+ description LACP EtherChannel
+ switchport trunk allowed vlan 9-12
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 99
+ switchport mode trunk
+ switchport nonegotiate
+ media-type rj45
+ negotiation auto
+ channel-group 1 mode active
+
+interface Ethernet1/0
+ description Server (VLAN 10)
+ switchport access vlan 10
+ switchport mode access
+ switchport nonegotiate
+ media-type rj45
+ negotiation auto
+
+interface Ethernet1/1
+ description Server (VLAN 11)
+ switchport access vlan 11
+ switchport mode access
+ switchport nonegotiate
+ media-type rj45
+ negotiation auto
+```
+DC-4:
+```
+hostname DC-4
+
+vtp mode transparent
+
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+spanning-tree vlan 9,12 priority 0
+spanning-tree vlan 10-11 priority 4096
+
+vlan 9-12 
+
+interface Port-channel1
+ switchport trunk allowed vlan 9-12
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 99
+ switchport mode trunk
+ switchport nonegotiate
+
+interface Ethernet0/0
+ description link to DC-2 (Static Trunk)
+ switchport trunk allowed vlan 11,12
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 99
+ switchport mode trunk
+ switchport nonegotiate
+ media-type rj45
+ negotiation auto
+ spanning-tree guard root
+
+interface Ethernet0/1
+ description link to DC-1 (DTP)
+ switchport trunk allowed vlan 9,10
+ switchport trunk native vlan 99
+ switchport mode dynamic desirable
+ media-type rj45
+ negotiation auto
+ spanning-tree guard root
+
+interface Ethernet0/2
+ description LACP EtherChannel
+ switchport trunk allowed vlan 9-12
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 99
+ switchport mode trunk
+ switchport nonegotiate
+ media-type rj45
+ negotiation auto
+ channel-group 1 mode passive
+         
+interface Ethernet0/3
+ description LACP EtherChannel
+ switchport trunk allowed vlan 9-12
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 99
+ switchport mode trunk
+ switchport nonegotiate
+ media-type rj45
+ negotiation auto
+ channel-group 1 mode passive
+
+interface Ethernet1/0
+ description Hosts (VLAN 9)
+ switchport access vlan 9
+ switchport mode access
+ switchport nonegotiate
+ media-type rj45
+ negotiation auto
+
+interface Ethernet1/1
+ description Hosts (VLAN 12)
+ switchport access vlan 12
+ switchport mode access
+ switchport nonegotiate
+ media-type rj45
+ negotiation auto
+```
+
+No Shuts on all interfaces:
+```
+interface Ethernet0/0
+ no shut
+!
+interface Ethernet0/1
+ no shut
+!
+interface Ethernet0/2
+ no shut
+!
+interface Ethernet0/3
+ no shut
+!
+```
+
+ </details>
+
+
 
 
 </details> 
- 
- 
+
 
 
 <h2> 🤳 Connect with me:</h2>
