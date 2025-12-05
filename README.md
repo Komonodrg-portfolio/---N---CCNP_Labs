@@ -103,7 +103,23 @@ Big shout out to the pioneers who shaped my educational yesteryear; from the cou
 
 <details>
 <summary><h3> EIGRP </h3></summary>
+
+ The aim for this section is to showcase configuration and verification of EIGRP topics.  High level, theoretcial knowledge on the EIGRP routing protocol can be found [here](https://chatgpt.com/s/t_69334e6c6b088191be55726e1324b728). 
  <br> 
+
+ ### EIGRP Commands:
+ 
+| Commands       | Summary                           |
+|------------|--------------------------------------|
+|show ip eigrp neighbors | show EIGRP neighbors and operational status |
+|show ip eigrp neighbors detail | show EIGRP neighbor adjacency details, stub router |
+|clear ip eigrp 1 neighbors | clear (reset) all neighbor adjacencies for AS 1 |
+|show ip eigrp interfaces | show EIGRP active interfaces and performance |
+|show ip eigrp interfaces detail Gi1/0 | show detailed operational status of EIGRP interfaces |
+|show ip eigrp topology | show EIGRP topology table entries, metrics, and states |
+|show ip eigrp topology 10.0.5.0/27 | show EIGRP topology entry details for a specific prefix |
+|show ip eigrp topology all-links | show all paths and non-feasible in EIGRP topology table |
+|show eigrp protocols | show EIGRP global settings, metrics, AD, variance |
   <details>
  <summary><h3>1) EIGRP Multi-AS</h3></summary>
 
