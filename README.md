@@ -102,13 +102,32 @@ Big shout out to the pioneers who shaped my educational yesteryear; from the cou
 ## 🧪 LABS
 
 <details>
+ <summary><h3> EIGRP </h3></summary>
+  <br> 
+  <details>
+ <summary><h3>1) EIGRP Multi-AS</h3></summary>
+
+ ## Topology:
+
+<p float="center">
+  <img src="images/eigrp multi-as.png" width="950" /><br>
+
+  
+ 
+ 
+
+ </details>
+
+</details>  
+
+<details>
  <summary><h3>1) OSPFv2 Multi Area</h3></summary>
   <br> 
 
 The aim for this lab is to showcase configuration and OSPF verification.  Theoretcial knowledge on the OSPF routing protocol can be found [here](https://www.cisconetsolutions.com/ospf-routing-protocol-deep-dive/). 
   
-## Topology:
 
+## Topology:
 <p float="center">
   <img src="images/1.OSPFv2.png" width="950" /><br>
 
