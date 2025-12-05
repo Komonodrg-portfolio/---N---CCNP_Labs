@@ -102,17 +102,29 @@ Big shout out to the pioneers who shaped my educational yesteryear; from the cou
 ## 🧪 LABS
 
 <details>
- <summary><h3> EIGRP </h3></summary>
-  <br> 
+<summary><h3> EIGRP </h3></summary>
+ <br> 
   <details>
  <summary><h3>1) EIGRP Multi-AS</h3></summary>
 
- ## Topology:
+## Topology:
 
 <p float="center">
-  <img src="images/eigrp multi-as.png" width="950" /><br>
+  <img src="images/eigrp multi-as.png" width="1000" /><br>
 
-  
+ ## Requirements:
+
+1) Enable EIGRP globally on all routers
+
+2) Configure router id manually on all routers.
+3) Advertise LAN segments, WAN connected subnets and loopbacks
+4) Enable passive interface for LAN segments and loopbacks
+5) Do not redistribute routes between AS 100 and AS 200
+6) Verify EIGRP neighbor adjacenty and routing tables
+   - show ip eigrp neighbors
+   - show ip route eigrp
+   - show ip route (R4)
+7) Redistribute eigrp (as number) for advertising between EIGRP AS's 
  
  
 
